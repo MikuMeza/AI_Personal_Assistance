@@ -1,0 +1,42 @@
+name: Android CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # You can also use windows-latest if needed
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4  # Updated to v4 for Node.js 20 compatibility
+
+    - name: Set up JDK 17  # Update this to use Java 17
+      uses: actions/setup-java@v4  # Updated to v4 for Node.js 20 compatibility
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew  # Add this step to fix the permission issue
+
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v4  # Updated to v4 for Node.js 20 compatibility
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    - name: Run Tests
+      run: ./gradlew test
