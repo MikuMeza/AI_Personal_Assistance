@@ -10,24 +10,24 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # This will run on a Windows server
+    runs-on: ubuntu-latest  # You can also change this to windows-latest if needed
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # Updated to v4 for Node.js 20 compatibility
 
     - name: Set up JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4  # Updated to v4 for Node.js 20 compatibility
       with:
         distribution: 'zulu'
         java-version: '11'
 
     - name: Cache Gradle dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4  # Updated to v4 for Node.js 20 compatibility
       with:
         path: |
-          C:\Users\runneradmin\.gradle\caches
-          C:\Users\runneradmin\.gradle\wrapper
+          ~/.gradle/caches
+          ~/.gradle/wrapper
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
