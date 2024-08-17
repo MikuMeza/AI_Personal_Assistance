@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # You can also change this to windows-latest if needed
+    runs-on: ubuntu-latest  # You can also use windows-latest if needed
 
     steps:
     - name: Checkout code
@@ -21,6 +21,9 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: '11'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew  # Add this step to fix the permission issue
 
     - name: Cache Gradle dependencies
       uses: actions/cache@v4  # Updated to v4 for Node.js 20 compatibility
