@@ -8,6 +8,7 @@ on:
     branches:
       - main
 
+
 jobs:
   build:
     runs-on: ubuntu-latest  # You can also use windows-latest if needed
